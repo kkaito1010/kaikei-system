@@ -1,0 +1,123 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.budget input {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.remaining-box {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.form-section label {
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.category-row {
+  display: flex;
+  gap: 8px;
+}
+
+.category-row select {
+  flex: 1;
+}
+
+.category-row button {
+  width: 40px;
+}
+
+.primary {
+  margin-top: 16px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 4px;
+}
+
+hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+.table-block {
+  margin-bottom: 20px;
+}
+
+.table-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* ★ 列幅完全固定 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: fixed;
+}
+
+th, td {
+  border: 1px solid #e5e5e5;
+  padding: 6px;
+  word-break: break-word;
+  white-space: normal;
+}
+
+th {
+  background: #f9f9f9;
+}
+
+.col-item {
+  width: 30%;
+}
+
+.col-amount {
+  width: 30%;
+  text-align: right;
+}
+
+.col-note {
+  width: 40%;
+}
+
+.col-action {
+  width: 70px;
+  text-align: center;
+}
+
+button.small {
+  font-size: 11px;
+  padding: 4px 6px;
+  margin: 2px;
+}

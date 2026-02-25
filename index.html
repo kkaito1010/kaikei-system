@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>吹奏楽部 会計管理</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>2025年度 会計管理</h1>
+
+    <div class="budget">
+      <label>予算</label>
+      <input type="number" id="budgetInput" value="600000" min="0" />
+      <div class="remaining-box">
+        残り: ¥<span id="remaining">600000</span>
+      </div>
+    </div>
+
+    <button id="exportExcelBtn" class="primary">📥 Excel出力</button>
+
+    <hr />
+
+    <div class="form-section">
+      <label>区分</label>
+      <div class="category-row">
+        <select id="category"></select>
+        <button id="addCategoryBtn">＋</button>
+      </div>
+
+      <label>項目</label>
+      <input type="text" id="item" />
+
+      <label>金額</label>
+      <input type="number" id="amount" min="1" />
+
+      <label>備考</label>
+      <input type="text" id="note" />
+
+      <button id="addExpenseBtn" class="primary">＋ 追加する</button>
+    </div>
+
+    <hr />
+
+    <div id="tableArea"></div>
+  </div>
+
+  <!-- SheetJS -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>
