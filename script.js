@@ -131,10 +131,24 @@ document.getElementById("addExpenseBtn").addEventListener("click", () => {
   renderTable();
 });
 
+
+// 🔥 区分追加（重複防止つき）
 document.getElementById("addCategoryBtn").addEventListener("click", () => {
   const name = prompt("新しい区分名を入力してください");
-  if (!name) return;
-  categories.push(name);
+  if (!name || !name.trim()) return;
+
+  const trimmed = name.trim();
+
+  const exists = categories.some(
+    cat => cat.toLowerCase() === trimmed.toLowerCase()
+  );
+
+  if (exists) {
+    alert("その区分はもう存在するで😎");
+    return;
+  }
+
+  categories.push(trimmed);
   renderCategories();
 });
 
@@ -142,21 +156,18 @@ budgetInput.addEventListener("input", renderTable);
 
 
 /* ===========================
-   🔥 hair罫線Excel出力
+   🔥 Excel出力
 =========================== */
 
 document.getElementById("exportExcelBtn").addEventListener("click", () => {
 
   let ws_data = [];
   let totalAll = 0;
-  let sectionRanges = [];
   let rowIndex = 0;
 
   categories.forEach(cat => {
     const filtered = expenses.filter(e => e.category === cat);
     if (filtered.length === 0) return;
-
-    const start = rowIndex;
 
     ws_data.push([`■ ${cat}`, "", ""]);
     rowIndex++;
@@ -174,8 +185,6 @@ document.getElementById("exportExcelBtn").addEventListener("click", () => {
 
     ws_data.push(["計", total, ""]);
     rowIndex++;
-
-    sectionRanges.push({ start, end: rowIndex - 1 });
 
     ws_data.push(["", "", ""]);
     rowIndex++;
@@ -211,7 +220,6 @@ document.getElementById("exportExcelBtn").addEventListener("click", () => {
       const cell = ws[ref];
       if (!cell) continue;
 
-      // 🔹 全セルhair格子
       styleCell(cell, {
         font: { name: "Meiryo", sz: 11 },
         alignment: { vertical: "center" },
@@ -223,7 +231,6 @@ document.getElementById("exportExcelBtn").addEventListener("click", () => {
         }
       });
 
-      // 🔹 金額書式
       if (C === 1 && typeof cell.v === "number") {
         cell.z = '"¥"#,##0';
         styleCell(cell, {
@@ -233,26 +240,19 @@ document.getElementById("exportExcelBtn").addEventListener("click", () => {
 
       const value = cell.v;
 
-      // 🔵 ヘッダー水色
       if (value === "項目" || value === "金額" || value === "備考") {
         styleCell(cell, {
-          fill: {
-            patternType: "solid",
-            fgColor: { rgb: "DDEBF7" }
-          },
+          fill: { patternType: "solid", fgColor: { rgb: "DDEBF7" } },
           font: { bold: true }
         });
       }
 
-      // 🔵 計 → 太字
       if (value === "計") {
         styleCell(cell, { font: { bold: true } });
-
         const amountCell = ws[XLSX.utils.encode_cell({ r: R, c: 1 })];
         if (amountCell) styleCell(amountCell, { font: { bold: true } });
       }
 
-      // 🔵 総合計・予算 → 水色背景
       if (value === "総合計" || value === "予算") {
         styleCell(cell, {
           fill: { patternType: "solid", fgColor: { rgb: "DDEBF7" } },
@@ -268,7 +268,6 @@ document.getElementById("exportExcelBtn").addEventListener("click", () => {
         }
       }
 
-      // 🟡 残り → 黄色＋太字
       if (value === "残り") {
         styleCell(cell, {
           fill: { patternType: "solid", fgColor: { rgb: "FFF2CC" } },
@@ -285,9 +284,11 @@ document.getElementById("exportExcelBtn").addEventListener("click", () => {
       }
     }
   }
+
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "会計データ");
   XLSX.writeFile(wb, "会計データ.xlsx");
 });
+
 renderCategories();
 renderTable();
