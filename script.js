@@ -101,7 +101,7 @@ function editExpense(index) {
 }
 
 function deleteExpense(index) {
-  if (!confirm("削除する？戻せないぞ？")) return;
+  if (!confirm("削除する？")) return;
   expenses.splice(index, 1);
   renderTable();
 }
@@ -144,7 +144,7 @@ document.getElementById("addCategoryBtn").addEventListener("click", () => {
   );
 
   if (exists) {
-    alert("その区分はもう存在するで😎");
+    alert("その区分は既にあります");
     return;
   }
 
